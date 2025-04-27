@@ -60,12 +60,88 @@ export const createProblemController = async (req,res) =>{
 
 }
 
-export const getAllProblemController = async (req,res) =>{}
+export const getAllProblemController = async (req,res) =>{
+    try {
+        const problems =await db.problem.findMany();
 
-export const getProblemByIDController = async (req,res) =>{}
+        if(!problems){
+            return res.status(404).json({
+                error:"no problems found"
+            })
+        }
 
-export const updateProblemByIDController = async (req,res) =>{}
+        res.status(200).json({
+            success:true,
+            messaage:"messge fetched sucessfully",
+            problems
+        })
 
-export const deleteProblemByIDController = async (req,res) =>{}
 
-export const getAllSolvedProblemByUserController = async (req,res) =>{}
+
+    } catch (error) {
+        return res.status(500).json({
+            error:"error while fetching problems"
+        })
+    }
+}
+
+export const getProblemByIDController = async (req,res) =>{
+    const {id} =req.params;
+
+    try {
+        const problem = await db.problem.findUnique({
+            where:{
+                id
+            }
+        })
+        
+        if(!problem){
+            return res.status(404).json({
+                error:"problem not found."
+            })
+        }
+        res.solutionCode(200).json({
+            success:true,
+            essaage:"problem fetched sucessfully",
+            problem
+        })
+ 
+    } catch (error) {
+         return res.status(500).json({
+            error:"error while fetching problem"
+    })
+}
+}
+export const updateProblemByIDController = async (req,res) =>{
+    //id
+    //id---> problem (condition)
+    //
+}
+
+export const deleteProblemByIDController = async (req,res) =>{
+    const {id} = req.params;
+
+   try {
+    const problem = await db.problem.findUnique({where:{id}})
+
+    if(!problem){
+        return res.status(404).json({
+            error:"problem not found"
+        })
+    }
+    await db.problem.delelte({where:{id}})
+
+    res.status(200).json({
+        success:true,
+        messaage:"problem deleted successfully",
+        problem
+    })
+   } catch (error) {
+       return res.status(500).json({
+            error:"error while deleting problem"
+   })
+}
+}
+export const getAllSolvedProblemByUserController = async (req,res) =>{
+
+}
