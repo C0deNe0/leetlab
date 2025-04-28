@@ -33,6 +33,8 @@ export const executeCode = async(req,res)=>{
 
 
     } catch (error) {
-        
+        return res.status(500).json({
+            error:"error while submitting the judge0 response"
+        })
     }
 }
