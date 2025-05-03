@@ -65,8 +65,7 @@ model Problem {
 //relationship
 user User @relation(fields: [userId],references: [id], onDelete: Cascade)
 submission Submission[]
-
-  ProblemSolved ProblemSolved[]
+ProblemSolved ProblemSolved[]
 }
 
 model Submission{ 
